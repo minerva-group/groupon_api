@@ -5,5 +5,5 @@ require "groupon_api/request"
 
 module GrouponApi
   API_KEY_FORMAT = /UK_AFF_0_\d+_212556_0/
-  API_BASE = 'partner-api.groupon.com'
+  API_BASE = 'partner-int-api.groupon.com'
 end
