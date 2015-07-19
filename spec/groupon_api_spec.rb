@@ -26,6 +26,13 @@ describe GrouponApi do
         radius: 10
       }
     }
+    let(:empty_lat_long_params){
+      {
+        lat: nil,
+        lng: nil,
+        radius: 10
+      }
+    }
     context 'without API key' do
       include_context :without_api_key
       it "throws an exception" do
@@ -42,12 +49,20 @@ describe GrouponApi do
       include_context :valid_api_key
       context 'without results' do
         it 'returns an empty Array' do
-          puts described_class
           params = valid_params.merge(limit: 0, offset: 0)
           result = described_class.deals(params)
           expect(result).to be_a(Array)
           expect(result.size).to eq(0)
         end  
+      end
+      context 'crazy lat and long' do
+        it 'returns an empty Array' do
+          allow(GrouponApi::Request).to receive('call').with('deals', empty_lat_long_params).and_return([])
+          result = described_class.deals(empty_lat_long_params)
+
+          expect(result).to be_a(Array)
+          expect(result.size).to eq(0)
+        end
       end
       context 'problem in GrouponApi' do
         it 'returns an empty Array' do

@@ -10,7 +10,7 @@ module GrouponApi
 
     results = GrouponApi::Request.call('deals', params)
     
-    return [] if results.nil? || results['deals'].nil?
+    return [] if results.nil? || results.length == 0 || results['deals'].nil?
 
     results['deals'].collect{|deal| HashWithIndifferentAccess.new(deal)}
   end
